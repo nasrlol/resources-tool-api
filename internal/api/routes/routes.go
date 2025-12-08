@@ -39,7 +39,7 @@ func InitRestRoutes() *mux.Router {
 	r.HandleFunc("/user/login", h.GetUser).Methods("POST")
 	r.HandleFunc("/user/registration", h.CreateUser).Methods("POST")
 	r.HandleFunc("/user/{id}", h.UpdateUser).Methods("PATCH")
-	r.HandleFunc("user/{id}", h.DeleteUser).Methods("DELETE")
+	r.HandleFunc("/user/{id}", h.DeleteUser).Methods("DELETE")
 
 	return r
 }

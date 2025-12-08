@@ -1,6 +1,8 @@
+// Package config loads env fils into a Login struct which gets passed to the rest of the application
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -10,7 +12,7 @@ import (
 type Login struct {
 	User string
 	Pass string
-	Ip   string
+	IP   string
 	Port string
 	Name string
 }
@@ -35,17 +37,14 @@ func CreateEnvFile() error {
 	return nil
 }
 
-func LoadCredentials() Login {
+func (L *Login) LoadCredentials() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println("error in loading credentials")
 	}
-
-	return Login{
-		User: os.Getenv("DATABASE_USER"),
-		Pass: os.Getenv("DATABASE_PASSWORD"),
-		Ip:   os.Getenv("DATABASE_IP"),
-		Port: os.Getenv("DATABASE_PORT"),
-		Name: os.Getenv("DATABASE_NAME"),
-	}
+	L.User = os.Getenv("DATABASE_USER")
+	L.Pass = os.Getenv("DATABASE_PASSWORD")
+	L.IP = os.Getenv("DATABASE_IP")
+	L.Port = os.Getenv("DATABASE_PORT")
+	L.Name = os.Getenv("DATABASE_NAME")
 }

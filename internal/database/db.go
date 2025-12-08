@@ -1,3 +1,4 @@
+// Pacakge databas provides a connection to the database
 package database
 
 import (
@@ -8,12 +9,15 @@ import (
 )
 
 func Connect() (*sql.DB, error) {
-	credentials := config.LoadCredentials()
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", credentials.User, credentials.Pass, credentials.Ip, credentials.Port, credentials.Name)
+
+	var lo config.Login
+	lo.LoadCredentials()
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", lo.User, lo.Pass, lo.IP, lo.Port, lo.Name)
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		return nil, fmt.Errorf("failed to connect to the database")
+		print("error")
 	}
 
 	fmt.Println("Connected to database")

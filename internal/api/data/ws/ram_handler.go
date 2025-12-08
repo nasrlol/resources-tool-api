@@ -2,36 +2,18 @@
 package http
 
 import (
-	"log"
+	"fmt"
 	"net/http"
-
-	"github.com/gorilla/websocket"
 )
 
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:    1024,
-	WriteBufferSize:   1024,
-	EnableCompression: true,
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-}
-
-func RAM(<-chan string) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		conn, err := upgrader.Upgrade(w, r, nil)
+func RAM(url string) http.Response {
+	var res http.Response
+	go func() {
+		resp, err := http.Get(url)
 		if err != nil {
-			log.Printf("Error upgrading to WebSocket: %v\n", err)
-			return
+			fmt.Printf("failed to fetch data")
 		}
-		defer func() {
-			if err := conn.Close(); err != nil {
-				log.Printf("Error closing WebSocket connection: %v\n", err)
-			}
-		}()
+	}()
 
-		go func() bool {
-			return true
-		}()
-	}
+	return res
 }

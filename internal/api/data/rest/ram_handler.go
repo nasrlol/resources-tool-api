@@ -36,9 +36,9 @@ func GetRam(w http.ResponseWriter, r *http.Request) {
 
 	if services.Check_session_valid(request.Token, conn) {
 		query := `SELECT * FROM rams WHERE id = ?`
-		var ram models.Ram
+		var ram models.RAM
 
-		conn.QueryRow(query, request.Id).Scan(&ram.Id)
+		conn.QueryRow(query, request.Id).Scan(&ram.ID)
 		w.WriteHeader(http.StatusAccepted)
 		json.NewEncoder(w).Encode(ram)
 
@@ -120,9 +120,9 @@ func UpdateRam(w http.ResponseWriter, r *http.Request) {
 
 	if services.Check_session_valid(request.Token, conn) {
 		query := `SELECT * FROM rams WHERE id = ?`
-		var ram models.Ram
+		var ram models.RAM
 
-		conn.QueryRow(query, request.Id).Scan(&ram.Id)
+		conn.QueryRow(query, request.Id).Scan(&ram.ID)
 		w.WriteHeader(http.StatusAccepted)
 		json.NewEncoder(w).Encode(ram)
 
